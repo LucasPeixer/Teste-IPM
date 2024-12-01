@@ -1,12 +1,11 @@
+# main.py
 from fastapi import FastAPI
-from routes import register_routes
+from middleware.cors import add_cors_middleware
+from routes.task_routes import router as task_router
 
-# Cria a aplicação FastAPI
-app = FastAPI(
-    title="To-Do API",
-    description="API para gerenciar tarefas e usuários",
-    version="1.0.0"
-)
+app = FastAPI()
 
-# Registra as rotas
-register_routes(app)
+add_cors_middleware(app)
+
+# Incluir rotas de tasks
+app.include_router(task_router, prefix="/api/v1/tasks")
